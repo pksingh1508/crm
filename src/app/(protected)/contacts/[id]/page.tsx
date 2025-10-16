@@ -6,6 +6,7 @@ import { supabase } from "@/lib/supabase";
 import React, { useState, useEffect, use } from "react";
 import Link from "next/link";
 import { toast } from "sonner";
+import { Spinner } from "@/components/ui/spinner";
 
 interface ContactDetailPageProps {
   params: Promise<{
@@ -123,8 +124,8 @@ export default function ContactDetailPage({ params }: ContactDetailPageProps) {
       <ProtectedRoute>
         <div className="min-h-screen bg-gray-50 p-6">
           <div className="max-w-4xl mx-auto">
-            <div className="flex justify-center items-center h-64">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+            <div className="flex justify-center items-center h-screen">
+              <Spinner className="w-6 h-6 text-gray-700" />
             </div>
           </div>
         </div>

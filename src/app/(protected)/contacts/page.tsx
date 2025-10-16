@@ -5,6 +5,7 @@ import { Contact } from "@/types";
 import { supabase } from "@/lib/supabase";
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { Spinner } from "@/components/ui/spinner";
 
 export default function ContactsPage() {
   const [contacts, setContacts] = useState<Contact[]>([]);
@@ -70,7 +71,7 @@ export default function ContactsPage() {
           {/* Loading State */}
           {loading && (
             <div className="flex justify-center items-center h-64">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+              <Spinner className="w-8 h-8 text-gray-700" />
             </div>
           )}
 
