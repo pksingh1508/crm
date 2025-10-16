@@ -1,5 +1,5 @@
 import { ButtonProps } from "@/types";
-import Button from "../ui/button";
+import Button from "../ui/Button";
 
 interface FormButtonProps extends ButtonProps {
   fullWidth?: boolean;

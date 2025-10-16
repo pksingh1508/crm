@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
 import { LoginCredentials } from "@/types";
 import { FormInput } from "../forms";
-import Button from "../ui/button";
+import Button from "../ui/Button";
 import { Card } from "../ui";
 import { toast } from "sonner";
 
