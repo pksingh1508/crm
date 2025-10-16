@@ -10,27 +10,41 @@ const supabase = createClient(
 
 export async function POST(req: Request) {
   try {
-    // Read request body safely
+    // Parse the request body
     const body = await req.json();
-    const { email } = body;
+    const { email } = body; // Extract email string from the object
 
-    if (!email) {
-      return new Response(JSON.stringify({ error: "Email is required" }), {
-        status: 400
-      });
+    if (!email || typeof email !== "string") {
+      return new Response(
+        JSON.stringify({ error: "Valid email is required" }),
+        {
+          status: 400
+        }
+      );
     }
 
     // Generate 6-digit OTP
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
+    const expiresAt = new Date(Date.now() + 5 * 60 * 1000).toISOString(); // +5 minutes
 
-    //Store the OTP and email in the database with an expiration time
-    // await supabase.from("otp_requests").insert([{ email, otp }]);
+    // Store the OTP and email in the database with an expiration time
+    const { error: SupabaseError } = await supabase
+      .from("otp_request")
+      .insert([{ email: email, otp, expires_at: expiresAt }]);
+
+    if (SupabaseError) {
+      console.error("Supabase Error:", SupabaseError);
+      return new Response(JSON.stringify({ error: SupabaseError.message }), {
+        status: 500
+      });
+    }
+
     // Send email via Resend
     const { data, error } = await resend.emails.send({
-      from: "Acme <onboarding@resend.dev>", // test sender
-      to: [email], // make sure it's an array
+      from: "ashutosh@eucareerserwis.pl",
+      to: "pawankumarlearner@gmail.com", // Use the actual email string, not hardcoded
       subject: "Your One-Time Password (OTP)",
-      react: <EmailOTP OTP={otp} /> // ✅ function call, not JSX
+      react: <EmailOTP OTP={otp} /> // Pass as a function call
     });
 
     if (error) {
@@ -38,7 +52,7 @@ export async function POST(req: Request) {
       return new Response(JSON.stringify({ error }), { status: 500 });
     }
 
-    return new Response(JSON.stringify({ success: true, otp, data }), {
+    return new Response(JSON.stringify({ success: true, data }), {
       status: 200
     });
   } catch (error: any) {

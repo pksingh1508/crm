@@ -28,7 +28,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   });
 
   useEffect(() => {
-    const SIGN_IN_TOAST_SHOWN_KEY = "signInToastShown";
     // Get initial session
     const getInitialSession = async () => {
       try {
@@ -64,17 +63,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
       // Show toast notifications for auth events
       switch (event) {
-        case "SIGNED_IN":
-          const toastAlreadyShown =
-            localStorage.getItem(SIGN_IN_TOAST_SHOWN_KEY) === "true";
-          if (!toastAlreadyShown) {
-            toast.success("Successfully signed in!");
-            localStorage.setItem(SIGN_IN_TOAST_SHOWN_KEY, "true");
-          }
-          break;
         case "SIGNED_OUT":
           toast.success("Successfully signed out!");
-          localStorage.removeItem(SIGN_IN_TOAST_SHOWN_KEY);
           break;
         case "TOKEN_REFRESHED":
           console.log("Token refreshed");

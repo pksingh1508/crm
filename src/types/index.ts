@@ -107,3 +107,22 @@ export interface SelectProps {
   disabled?: boolean;
   className?: string;
 }
+
+// Contact types
+export interface Contact {
+  id?: string;
+  name: string;
+  email: string;
+  phone: string;
+  iam: string;
+  description: string;
+  is_mailed: boolean;
+  created_at?: string;
+  updated_at?: string;
+}
+
+export interface ContactsResponse {
+  data: Contact[] | null;
+  error: string | null;
+  count?: number;
+}

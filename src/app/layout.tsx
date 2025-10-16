@@ -4,7 +4,6 @@ import "./globals.css";
 import ReactLenis from "lenis/react";
 import { Toaster } from "sonner";
 import { AuthProvider } from "@/contexts/AuthContext";
-import Navbar from "@/components/common/Navbar";
 
 const inter = Inter({
   weight: ["400", "500", "600", "700", "800", "900"],
@@ -29,7 +28,6 @@ export default function RootLayout({
       <ReactLenis root>
         <body className={`${inter.className} antialiased`}>
           <AuthProvider>
-            <Navbar />
             <main className="min-h-screen">{children}</main>
             <Toaster richColors position="top-right" />
           </AuthProvider>
